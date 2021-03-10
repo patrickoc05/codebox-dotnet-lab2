@@ -10,21 +10,21 @@ services:
     ports:
       - "1433:1433"
 
-  redis:
-    image: redis:4.0.8-alpine
-    ports:
-      - target: 6379
-        published: 6379
-        protocol: tcp
-        mode: ingress
-    volumes:
-      - "~/data/${STACK_NAME}/redis:/data"
+#  redis:
+#    image: redis:4.0.8-alpine
+#    ports:
+#      - target: 6379
+#        published: 6379
+#        protocol: tcp
+#        mode: ingress
+#    volumes:
+#      - "~/data/${STACK_NAME}/redis:/data"
 
-  code-server:
-    image: stvansolano/code-server:latest
-    ports:
-      - "8080:8080"
-      - "8443:8443"
-
-    volumes:
-      - "$PWD/:/home/playground"
+#  code-server:
+#    image: stvansolano/code-server:latest
+#    ports:
+#      - "8080:8080"
+#      - "8443:8443"
+#
+#    volumes:
+#      - "$PWD/:/home/playground"
