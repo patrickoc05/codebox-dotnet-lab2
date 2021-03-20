@@ -7,32 +7,18 @@
     <h1>Hello!</h1>
     <p id="hello"></p>
     <script>
-        "use strict";
-
-        var body = document.body;
-
-        function fetchData(){
-            var request = new XMLHttpRequest();
-            request.open('GET', 'https://b576f485-204d-4e1d-8dc5-05db51aebef9-5000.apps.codespaces.githubusercontent.com/hello', true);
-
-            request.onload = function() {
-              if (request.status !== 200) {
-                body.innerHTML = 'An error occurred during your request: ' +  request.status + ' ' + request.statusText;
-                return;
-              }
-              document.getElementById("hello").innerText = request.responseText;
-            };
-            request.onerror = function() {
-                body.innerHTML = 'An error occurred during your request: ' +  request.status + ' ' + request.statusText;
-            };
-            request.send();
-        }
-
-        document.onreadystatechange = function () {
-            if (document.readyState == "interactive") {
-                fetchData();
-            }
-        }
+        fetch("https://localhost:5001/hello",
+            {
+                method: "GET",
+                headers: {
+                    Accept: 'application/json',
+                }
+            })
+            .then(async response => {
+                var responseText = await response.json();
+                console.log(responseText);
+                document.getElementById('hello').innerHTML = responseText;
+            }); 
     </script>
 </body>
 </html>
