@@ -10,7 +10,6 @@ using Microsoft.Extensions.Logging;
 namespace DotNetWebApi.Controllers
 {
     [ApiController]
-    [EnableCors]
     [Route("/api/v1/[controller]")]
     public class TodoController : Controller
     {
@@ -24,7 +23,10 @@ namespace DotNetWebApi.Controllers
 
         [HttpGet]
         public IActionResult Get() 
-            => Ok(new object[] { 1, 2, 3 });
+        {
+            _logger.LogInformation("Get Todos");
+            return Ok(new object[] { 1, 2, 3 });
+        }
 
         [HttpPost]
         public IActionResult Post([FromBody]object input)
