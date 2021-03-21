@@ -1,6 +1,6 @@
 export default {
-    getItems: async function() {
-        var result = await fetch("https://stvansolano-codebox-dotnet-mc6r-5001.githubpreview.dev/api/v1/todo",
+    getItems: async function () {
+        var result = await fetch("/backend/todo",
             {
                 method: "GET",
                 headers: {
