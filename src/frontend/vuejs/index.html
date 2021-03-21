@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Web app</title>
+  </head>
+  <body>
+    <!-- This file is preserved only for webpack "server" purposes. No longer maintained -->
+    <div id="app">
+        <section>
+            <h5 class="center-align">To-Dos</h5>
+            <ul class="collection with-header">
+                <li class="collection-header">
+                    <div class="row">
+                        <div class="input-field col s10">
+                            <input id="new_todo" type="text" class="validate" v-model="todo.title" />
+                        </div>
+                        <div class="input-field col s2">
+                            <button class="btn" @click="addTodo">Add</button>
+                        </div>
+                    </div>
+                </li>
+                <li
+                    class="collection-item"
+                    v-for="todo in todos"
+                    :key="todo.id"
+                    :class="{ fade: todo.isCompleted }">
+                    <span class="deleteIcon" @click="deleteToDo(todo.id)">&#10005;</span>
+                    {{todo.title}}
+                    <span class="secondary-content">
+                        <label>
+                            <input
+                                type="checkbox"
+                                class="filled-in"
+                                :checked="todo.isCompleted"
+                                @change="updateTodoItem(todo.id, $event)"
+                            />
+                            <span></span>
+                        </label>
+                    </span>
+                </li>
+            </ul>
+        </section>
+    </div>
+    <script src="https://unpkg.com/vue"></script>
+    <script type="module" src="app/main.js"></script>
+  </body>
+</html>
