@@ -10,6 +10,38 @@ services:
     ports:
       - "1433:1433"
 
+  frontend-vuejs:
+    build: src/frontend/vuejs
+    ports:
+      - "6000:80"
+    depends_on: 
+      - backend
+    links: 
+      - backend
+
+  backend:
+    build: src/DotNetWebApi
+    ports:
+      - "5000:5000"
+    environment: 
+      - ASPNETCORE_URLS=http://+:5000
+    depends_on: 
+      - adventure-works-db
+    links:
+      - adventure-works-db
+
+  proxy:
+    build: src/proxy
+    restart: always
+    ports:
+      - 80:80
+    depends_on:
+      - backend
+      - frontend-vuejs
+    links:
+      - backend
+      - frontend-vuejs
+      
 #  redis:
 #    image: redis:4.0.8-alpine
 #    ports:
