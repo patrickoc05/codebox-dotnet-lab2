@@ -16,26 +16,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.data = await Http.GetStringAsync("/api/v1/hello");
-    }
-    
-    @foreach (var forecast in data)
-    {
-        <tr>
-            <td>@forecast.Date.ToShortDateString()</td>
-            <td>@forecast.TemperatureC</td>
-            <td>@forecast.TemperatureF</td>
-            <td>@forecast.Summary</td>
-        </tr>
-    }
-    @foreach (var forecast in data)
-    {
-        <tr>
-            <td>@forecast.Date.ToShortDateString()</td>
-            <td>@forecast.TemperatureC</td>
-            <td>@forecast.TemperatureF</td>
-            <td>@forecast.Summary</td>
-        </tr>
+        this.data = await Http.GetStringAsync("hello").ConfigureAwait(false);
     }
     */
 }
