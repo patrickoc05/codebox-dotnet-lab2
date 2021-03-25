@@ -4,10 +4,10 @@ name: Docker Hub - Build images
 on:
   push:
     branches:
-      - 'main'
+      - 'WebApi'
     paths:
     - '.github/workflows/docker-github-action.yml'
-    - 'src/DotNetWebApi/**'
+    - 'src/services/DotNetWebApi/**'
 
 jobs:
   build:
