@@ -8,36 +8,40 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Routing;
 using Microsoft.Extensions.Primitives;
 
-WebHost.CreateDefaultBuilder().Configure(app =>
+class Program
 {
-    app.UseRouting();
-    app.UseEndpoints(e =>
+    public static void Main(string[] args) =>  WebHost.CreateDefaultBuilder(args)
+    .Configure(app =>
     {
-        e.MapGet("/", c => c.Response.WriteAsync("Hello world!"));
-        
-        e.MapGet("hello", context =>
-            context.Response.WriteAsJsonAsync(new { Message = "Hello, visitor"})
-        );
-        
-        e.MapGet("hello/{name}", context => {
+        app.UseRouting();
+        app.UseEndpoints(e =>
+        {
+            e.MapGet("/", c => c.Response.WriteAsync("Hello world!"));
+            
+            e.MapGet("hello", context =>
+                context.Response.WriteAsJsonAsync(new { Message = "Hello, visitor"})
+            );
+            
+            e.MapGet("hello/{name}", context => {
 
-            context.Response.WriteAsync($"Hello, {context.Request.RouteValues["name"]}");
+                context.Response.WriteAsync($"Hello, {context.Request.RouteValues["name"]}");
 
-            return System.Threading.Tasks.Task.CompletedTask;
+                return System.Threading.Tasks.Task.CompletedTask;
+            });
+
+            e.MapPost("hello", async context => {
+
+                var value = new StringValues(context.Request.Host.Host);
+
+                context.Response.Headers.Add("Host-name", value);
+
+                using var reader = new StreamReader(context.Request.Body, System.Text.Encoding.UTF8);
+                var content = await reader.ReadToEndAsync();
+
+                System.Console.WriteLine(content);
+
+                context.Response.StatusCode = 200;
+            });
         });
-
-        e.MapPost("hello", async context => {
-
-            var value = new StringValues(context.Request.Host.Host);
-
-            context.Response.Headers.Add("Host-name", value);
-
-            using var reader = new StreamReader(context.Request.Body, System.Text.Encoding.UTF8);
-            var content = await reader.ReadToEndAsync();
-
-            System.Console.WriteLine(content);
-
-            context.Response.StatusCode = 200;
-        });
-    });
-}).Build().Run();
+    }).Build().Run();
+}
