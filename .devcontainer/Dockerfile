@@ -1,5 +1,9 @@
 # Note: You can use any Debian/Ubuntu based image you want. 
 #FROM mcr.microsoft.com/vscode/devcontainers/base:0-buster
+# Find the Dockerfile for mcr.microsoft.com/azure-functions/python:3.0-python3.8-core-tools at this URL
+# https://github.com/Azure/azure-functions-docker/blob/dev/host/3.0/buster/amd64/python/python38/python38-core-tools.Dockerfile
+
+#FROM mcr.microsoft.com/vscode/devcontainers/base:buster
 ARG VARIANT=5.0
 FROM mcr.microsoft.com/vscode/devcontainers/dotnetcore:${VARIANT}
 
@@ -21,8 +25,19 @@ RUN apt-get update \
     && /bin/bash /tmp/library-scripts/docker-debian.sh "${ENABLE_NONROOT_DOCKER}" "${SOURCE_SOCKET}" "${TARGET_SOCKET}" "${USERNAME}" \
     # Install Dapr
     && wget -q https://raw.githubusercontent.com/dapr/cli/master/install/install.sh -O - | /bin/bash \
-        # Clean up
+    # Install the Azure CLI
+    && bash /tmp/library-scripts/azcli-debian.sh \
+    # Clean up
     && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* /tmp/library-scripts/
+
+# Install .NET
+#RUN apt-get update; \
+#    apt-get install -y wget;
+#RUN wget https://packages.microsoft.com/config/debian/10/packages-microsoft-prod.deb -O packages-microsoft-prod.deb; \
+#    apt-get update; \
+#    apt-get install -y apt-transport-https && apt-get update; \
+#    dpkg -i packages-microsoft-prod.deb && apt-get update; \
+#    apt-get install -y dotnet-sdk-5.0
 
 # Install kubectl
 RUN curl -sSL -o /usr/local/bin/kubectl https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl \
@@ -45,7 +60,6 @@ RUN wget -q -O - https://raw.githubusercontent.com/rancher/k3d/main/install.sh |
 
 RUN curl -sL https://deb.nodesource.com/setup_14.x | bash -
 RUN apt-get install -y nodejs
+RUN npm install --cache /tmp/empty-cache -g @azure/static-web-apps-cli
 
-EXPOSE 8001
-EXPOSE 80
 ENTRYPOINT [ "sleep", "infinity" ]
