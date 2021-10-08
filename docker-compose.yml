@@ -26,3 +26,12 @@ services:
         retries: 10
         start_period: 10s
         timeout: 3s     
+
+# Commands
+# git clone https://github.com/stvansolano/codebox-dotnet.git
+# cd codebox-dotnet
+# docker-compose up -d --build
+# docker exec -it <CONTAINER> bash
+# dotnet new webapi --name MyWebApi
+# cd MyWebApi
+# dotnet run --urls "http://*:5000"
