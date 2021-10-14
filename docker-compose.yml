@@ -11,6 +11,17 @@ services:
     links:
       - db
 
+  dotnet-blazor:
+    build:
+      context: .
+      dockerfile: src/frontend/Dockerfile
+    ports:
+    - "8080:80"
+    links:
+    - db
+    depends_on:
+    - db
+
   dotnet-swagger:
     build:
       context: .
@@ -25,6 +36,7 @@ services:
     - db
     depends_on:
     - db
+
   #app:
   #  build: your/folder
   #  ports:
