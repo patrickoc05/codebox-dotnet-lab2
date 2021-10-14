@@ -1,15 +1,19 @@
 version: "3.7"
 services:
-  codebox:
-    build: 
-      dockerfile: Dockerfile
-      context: .devcontainer
+  dotnet-swagger:
+    build:
+      context: .
+      dockerfile: src/dotnet-swagger/Dockerfile
     ports:
-      - 80:5000 
-    depends_on:
-      - db
+    - "5001:80"  
+    environment:
+      -  ASPNETCORE_URLS=http://+:80
+    command: |
+      - echo "ASP.NET Backend up and running!"
     links:
-      - db
+    - adventure-works-db
+    depends_on:
+    - adventure-works-db
   #app:
   #  build: your/folder
   #  ports:
