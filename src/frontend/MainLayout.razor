@@ -16,7 +16,7 @@
 
     protected override async Task OnInitializedAsync()
     {
-        this.data = await Http.GetStringAsync("/hello");
+        this.data = await Http.GetStringAsync("/api/v1/Hello");
     }
     
     @foreach (var forecast in data)

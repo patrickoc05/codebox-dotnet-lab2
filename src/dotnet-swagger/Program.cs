@@ -40,7 +40,7 @@ namespace Dotnet_Backend
                                 {
                                     builder.AllowAnyOrigin()
                                            .AllowAnyHeader()
-                                           .AllowAnyMethod();;
+                                           .AllowAnyMethod();
                                 });
             });
             services.AddControllers();
@@ -68,6 +68,7 @@ namespace Dotnet_Backend
             }
 
             app.UseRouting();
+            app.UseCors("Policy");
 
             app.UseEndpoints(endpoints =>
             {
@@ -80,7 +81,6 @@ namespace Dotnet_Backend
                 });
             });
 
-            app.UseCors("Policy");
         }
     }
 }
