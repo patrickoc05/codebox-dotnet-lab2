@@ -17,6 +17,7 @@ namespace Frontend
             builder.Services.AddScoped(sp => new HttpClient { 
                 BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
+            // dotnet run --project src/frontend/Frontend.csproj --urls "http://*:80"
             await builder.Build().RunAsync();
         }
     }
