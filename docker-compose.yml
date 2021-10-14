@@ -1,5 +1,16 @@
 version: "3.7"
 services:
+  codebox:
+    build: 
+      dockerfile: Dockerfile
+      context: .devcontainer
+    ports:
+      - 80:80 
+    depends_on:
+      - db
+    links:
+      - db
+
   dotnet-swagger:
     build:
       context: .
@@ -11,9 +22,9 @@ services:
     command: |
       - echo "ASP.NET Backend up and running!"
     links:
-    - adventure-works-db
+    - db
     depends_on:
-    - adventure-works-db
+    - db
   #app:
   #  build: your/folder
   #  ports:
