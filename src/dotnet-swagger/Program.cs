@@ -33,6 +33,16 @@ namespace Dotnet_Backend
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services) 
         {
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy",
+                                builder =>
+                                {
+                                    builder.AllowAnyOrigin()
+                                           .AllowAnyHeader()
+                                           .AllowAnyMethod();;
+                                });
+            });
             services.AddControllers();
 
             // dotnet add package Swashbuckle.AspNetCore
@@ -69,6 +79,8 @@ namespace Dotnet_Backend
                     return Task.CompletedTask;
                 });
             });
+
+            app.UseCors("Policy");
         }
     }
 }
@@ -81,7 +93,7 @@ namespace DotNet_Backend
     using System.Threading.Tasks;
     using Microsoft.AspNetCore.Mvc;
 
-    [Route("[controller]")]
+    [Route("/api/v1/[controller]")]
     public class HelloController : ControllerBase
     {
         [HttpGet]
