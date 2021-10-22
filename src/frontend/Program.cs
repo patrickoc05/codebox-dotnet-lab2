@@ -15,7 +15,7 @@ namespace Frontend
             builder.RootComponents.Add<App>("#app");
 
             builder.Services.AddScoped(sp => new HttpClient { 
-                BaseAddress = new Uri(builder.HostEnvironment.BaseAddress)
+                BaseAddress = new Uri("https://localhost:5003")
             });
 
             // dotnet run --project src/frontend/Frontend.csproj --urls "http://*:80"

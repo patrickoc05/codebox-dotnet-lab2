@@ -1,31 +1,41 @@
 @inherits LayoutComponentBase
 @using System
 @using System.Net.Http
+@using System.Text.Json
 @page "/"
 @inject HttpClient Http
 
 <div>
-    @helloWorld
+    <h1>
+        @helloWorld
+    </h1>
+
+    @data
 </div>
 
 @code {
     string helloWorld = "Hello, World! C#";
 
-    /*
-    private string data;
 
+    private string data;
     protected override async Task OnInitializedAsync()
     {
+        Console.WriteLine(Http.BaseAddress);
         this.data = await Http.GetStringAsync("/api/v1/Hello");
+
+        StateHasChanged();
+
+        //this.data = JsonSerializer.Serialize(data);
     }
-    
-    @foreach (var forecast in data)
-    {
-        <tr>
-            <td>@forecast.Date.ToShortDateString()</td>
-            <td>@forecast.TemperatureC</td>
-            <td>@forecast.TemperatureF</td>
-            <td>@forecast.Summary</td>
-        </tr>
-    }*/
+
+    /*
+   @foreach (var forecast in data)
+   {
+       <tr>
+           <td>@forecast.Date.ToShortDateString()</td>
+           <td>@forecast.TemperatureC</td>
+           <td>@forecast.TemperatureF</td>
+           <td>@forecast.Summary</td>
+       </tr>
+   }*/
 }

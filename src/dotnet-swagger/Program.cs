@@ -98,5 +98,11 @@ namespace DotNet_Backend
     {
         [HttpGet]
         public ActionResult SayHello() => base.Ok("Hello, World!".Split(" "));
+
+        [HttpPost]
+        public ActionResult Test(JsonResult result)
+        {
+            return Ok(result);
+        }
     }
 }
